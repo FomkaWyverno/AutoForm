@@ -22,6 +22,6 @@ public class JailOffline extends Command {
 
     @Override
     public String getCommand() {
-        return COMMAND + " " + time + " " + this.getReasonAndPrefix();
+        return COMMAND + " " + this.nickname + " " + this.time + " " + this.getReasonAndPrefix();
     }
 }

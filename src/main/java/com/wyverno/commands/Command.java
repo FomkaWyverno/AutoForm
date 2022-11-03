@@ -1,10 +1,11 @@
 package com.wyverno.commands;
 
 import com.wyverno.commands.annotations.FillableParameter;
+import com.wyverno.commands.annotations.IndividualParameter;
 
 public abstract class Command {
 
-
+    @IndividualParameter
     public String nickname;
     @FillableParameter
     public String reason;

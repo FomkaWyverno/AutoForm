@@ -71,7 +71,9 @@ public class AddNicknameCommand extends AbstractCommand {
         Field[] fillableFields = this.getFillableFields(command);
         Field individualField = this.getIndividualField(command);
 
-        assert individualField != null;
+        if (individualField == null) {
+            throw new NullPointerException("individualField is null");
+        }
 
         Command cmd = null;
         try {
@@ -80,7 +82,7 @@ public class AddNicknameCommand extends AbstractCommand {
             e.printStackTrace();
         }
 
-        assert cmd != null;
+        assert cmd == null;
 
         HashMap<String, Object> defaultParameters = this.getConsole().getForm().getParametersForCommand();
 
@@ -90,16 +92,13 @@ public class AddNicknameCommand extends AbstractCommand {
             }
         }
 
-         setterParameterForCommand(command, cmd, individualField, name);
+        setterParameterForCommand(command, cmd, individualField, name);
 
         return cmd;
     }
 
     private void setterParameterForCommand(Class<? extends Command> command, Command cmd, Field field, Object parameter) {
         try {
-
-            System.out.println("name = " + field.getName());
-
             String methodName = "set" + capitalized(field.getName());
             Method setMethod = command.getMethod(methodName, field.getType());
             setMethod.invoke(cmd, parameter);
