@@ -14,6 +14,9 @@ public class Main {
 
         Console console = new Console();
 
+        System.out.println("Добро пожаловать!\n" +
+                "Программа запустилась что бы ознакомится напишите /help");
+
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             while (true) {
                 console.readingLine(reader.readLine());
