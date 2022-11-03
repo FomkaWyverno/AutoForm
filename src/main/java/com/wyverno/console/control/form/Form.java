@@ -13,7 +13,7 @@ import java.util.*;
 public class Form {
 
     private CommandsType type;
-    private HashMap<Field,Object> parametersForCommand;
+    private HashMap<String,Object> parametersForCommand;
 
     private List<Command> commands;
 
@@ -43,11 +43,11 @@ public class Form {
         return this.type != null;
     }
 
-    public HashMap<Field, Object> getParametersForCommand() {return this.parametersForCommand;}
+    public HashMap<String, Object> getParametersForCommand() {return this.parametersForCommand;}
 
     private void changeParameters() {
         Field[] fields = this.type.getCLAZZ().getFields();
-        HashMap<Field,Object> fieldObjectHashMap = new HashMap<>();
+        HashMap<String, Object> fieldObjectHashMap = new HashMap<>();
         if (hasFillableParameters(fields)) {
             System.out.println("Новый тип который вы выбрали нужно ввести параметры для наказания.");
 
@@ -62,10 +62,10 @@ public class Form {
 
                     if (field.getType().equals(int.class)) {
                         int number = Integer.parseInt(line);
-                        fieldObjectHashMap.put(field,number);
+                        fieldObjectHashMap.put(field.getName(),number);
                         continue;
                     }
-                    fieldObjectHashMap.put(field,line);
+                    fieldObjectHashMap.put(field.getName(),line);
                 }
 
                 System.out.println("Новые параметры установлены.");

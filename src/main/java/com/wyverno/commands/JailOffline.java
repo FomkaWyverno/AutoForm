@@ -9,6 +9,8 @@ public class JailOffline extends Command {
     @FillableParameter
     public int time;
 
+    public JailOffline() {}
+
     public JailOffline(String nickname, String reason, String prefix, int time) {
         super(nickname, reason, prefix);
         this.time = time;
