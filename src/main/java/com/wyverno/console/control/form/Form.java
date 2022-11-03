@@ -45,6 +45,12 @@ public class Form {
 
     public HashMap<String, Object> getParametersForCommand() {return this.parametersForCommand;}
 
+    public void printForm() {
+        for (Command command : this.commands) {
+            System.out.println(command.getCommand());
+        }
+    }
+
     private void changeParameters() {
         Field[] fields = this.type.getCLAZZ().getFields();
         HashMap<String, Object> fieldObjectHashMap = new HashMap<>();

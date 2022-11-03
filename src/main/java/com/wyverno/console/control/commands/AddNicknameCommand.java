@@ -26,7 +26,11 @@ public class AddNicknameCommand extends AbstractCommand {
 
             List<Command> commandList = this.createListCommand(this.getConsole().getForm().getType().getCLAZZ(), names);
 
-            commandList.forEach(e -> System.out.println(e.getCommand()));
+            for (Command command : commandList) {
+                this.getConsole().getForm().addCommand(command);
+            }
+
+            System.out.println("Игроки добавлены в форму! Количество игроков: " + commandList.size());
 
         } else {
             System.out.println("Пожалуйта выберите тип команды /settype");

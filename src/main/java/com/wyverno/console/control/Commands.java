@@ -2,6 +2,7 @@ package com.wyverno.console.control;
 
 import com.wyverno.console.Console;
 import com.wyverno.console.control.commands.AddNicknameCommand;
+import com.wyverno.console.control.commands.GetFormCommand;
 import com.wyverno.console.control.commands.HelpCommand;
 import com.wyverno.console.control.commands.SetTypeCommand;
 
@@ -24,7 +25,7 @@ public class Commands {
 
     @ConsoleCommand(command = "/getform")
     public static void commandGetForm(Console console,String args) {
-        System.out.println("GETFORM");
+        new GetFormCommand(console).run(args);
     }
 
     @ConsoleCommand(command = "/stop")
