@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +25,7 @@ public class AddNicknameCommand extends AbstractCommand {
 
             List<Command> commandList = this.createListCommand(this.getConsole().getForm().getType().getCLAZZ(), names);
 
+            commandList.forEach(e -> System.out.println(e.getCommand()));
 
         } else {
             System.out.println("Пожалуйта выберите тип команды /settype");
@@ -45,8 +45,18 @@ public class AddNicknameCommand extends AbstractCommand {
     }
 
     private List<Command> createListCommand(Class<? extends Command> command, String[] nicknames) {
-        Field[] fields = this.getFillableField(command);
 
+        List<Command> commandList = new ArrayList<>();
+
+        for (String name : nicknames) {
+            commandList.add(createCommand(command,name));
+        }
+
+        return commandList;
+    }
+
+    private Command createCommand(Class<? extends Command> command, String name) {
+        Field[] fields = this.getFillableField(command);
 
         Command cmd = null;
         try {
@@ -61,22 +71,26 @@ public class AddNicknameCommand extends AbstractCommand {
 
         for (Field field : fields) {
             try {
+
+                System.out.println("name = " + field.getName());
+
                 String methodName = "set" + capitalized(field.getName());
-                System.out.println(methodName);
                 Method setMethod = command.getMethod(methodName,field.getType());
 
                 Object arg = null;
 
                 if (defaultParameters.containsKey(field.getName())) {
                     setMethod.invoke(cmd, defaultParameters.get(field.getName()));
+                } else if (setMethod.getName().equals("setNickname")) {
+                    setMethod.invoke(cmd, name);
+                    System.out.println("Setnick");
                 }
 
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-
-        return null;
+        return cmd;
     }
 
     public static String capitalized(String string) {
