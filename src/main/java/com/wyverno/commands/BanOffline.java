@@ -1,8 +1,6 @@
 package com.wyverno.commands;
 
-import com.wyverno.commands.annotations.ConstructorForCreateCommand;
 import com.wyverno.commands.annotations.FillableParameter;
-import com.wyverno.commands.annotations.NameParameter;
 
 public class BanOffline extends Command {
 
@@ -13,14 +11,17 @@ public class BanOffline extends Command {
     @FillableParameter
     public int days;
 
-    @ConstructorForCreateCommand
-    public BanOffline(@NameParameter(name = "nickname") String nickname,
-                      @NameParameter(name = "reason") String reason,
-                      @NameParameter(name = "prefix") String prefix,
-                      @NameParameter(name = "typeBan") int typeBan,
-                      @NameParameter(name = "days") int days) {
+    public BanOffline(String nickname, String reason, String prefix, int typeBan, int days) {
         super(nickname, reason, prefix);
         this.typeBan = typeBan;
+        this.days = days;
+    }
+
+    public void setTypeBan(int typeBan) {
+        this.typeBan = typeBan;
+    }
+
+    public void setDays(int days) {
         this.days = days;
     }
 

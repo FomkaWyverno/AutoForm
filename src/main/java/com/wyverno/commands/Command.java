@@ -1,7 +1,6 @@
 package com.wyverno.commands;
 
 import com.wyverno.commands.annotations.FillableParameter;
-import com.wyverno.commands.annotations.NameParameter;
 
 public abstract class Command {
 
@@ -14,6 +13,18 @@ public abstract class Command {
     public Command(String nickname, String reason, String prefix) {
         this.nickname = nickname;
         this.reason = reason;
+        this.prefix = prefix;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 

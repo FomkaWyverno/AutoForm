@@ -1,8 +1,6 @@
 package com.wyverno.commands;
 
-import com.wyverno.commands.annotations.ConstructorForCreateCommand;
 import com.wyverno.commands.annotations.FillableParameter;
-import com.wyverno.commands.annotations.NameParameter;
 
 public class MuteOffline extends Command {
 
@@ -11,12 +9,12 @@ public class MuteOffline extends Command {
     @FillableParameter
     public int time;
 
-    @ConstructorForCreateCommand
-    public MuteOffline(@NameParameter(name = "nickname") String nickname,
-                       @NameParameter(name = "reason") String reason,
-                       @NameParameter(name = "prefix") String prefix,
-                       @NameParameter(name = "time") int time) {
+    public MuteOffline(String nickname, String reason, String prefix, int time) {
         super(nickname, reason, prefix);
+        this.time = time;
+    }
+
+    public void setTime(int time) {
         this.time = time;
     }
 
