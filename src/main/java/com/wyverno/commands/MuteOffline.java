@@ -9,6 +9,8 @@ public class MuteOffline extends Command {
     @FillableParameter
     public int time;
 
+    public MuteOffline() {}
+
     public MuteOffline(String nickname, String reason, String prefix, int time) {
         super(nickname, reason, prefix);
         this.time = time;
@@ -20,6 +22,6 @@ public class MuteOffline extends Command {
 
     @Override
     public String getCommand() {
-        return COMMAND + " " + time + " " + getReasonAndPrefix();
+        return COMMAND + " " + this.nickname + " " + time + " " + getReasonAndPrefix();
     }
 }

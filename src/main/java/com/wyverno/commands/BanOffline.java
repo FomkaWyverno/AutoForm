@@ -11,6 +11,8 @@ public class BanOffline extends Command {
     @FillableParameter
     public int days;
 
+    public BanOffline() {}
+
     public BanOffline(String nickname, String reason, String prefix, int typeBan, int days) {
         super(nickname, reason, prefix);
         this.typeBan = typeBan;
@@ -27,6 +29,6 @@ public class BanOffline extends Command {
 
     @Override
     public String getCommand() {
-        return COMMAND + " " + this.typeBan + " " + this.days + " " + this.getReasonAndPrefix();
+        return COMMAND + " " + this.typeBan + " " + this.nickname + " " + this.days + " " + this.getReasonAndPrefix();
     }
 }
