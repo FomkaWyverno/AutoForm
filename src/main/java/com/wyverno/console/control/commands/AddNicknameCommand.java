@@ -2,6 +2,7 @@ package com.wyverno.console.control.commands;
 
 import com.wyverno.commands.Command;
 import com.wyverno.commands.annotations.FillableParameter;
+import com.wyverno.commands.annotations.IndividualParameter;
 import com.wyverno.console.Console;
 
 import java.lang.reflect.Field;
@@ -32,11 +33,23 @@ public class AddNicknameCommand extends AbstractCommand {
         }
     }
 
-    private Field[] getFillableField(Class<? extends Command> clazz) {
+    private Field[] getFillableFields(Class<? extends Command> clazz) {
         List<Field> fieldList = new ArrayList<>();
 
         for (Field field : clazz.getFields()) {
             if (field.isAnnotationPresent(FillableParameter.class)) {
+                fieldList.add(field);
+            }
+        }
+
+        return fieldList.toArray(new Field[0]);
+    }
+
+    private Field[] getIndividualFields(Class<? extends Command> clazz) {
+        List<Field> fieldList = new ArrayList<>();
+
+        for (Field field : clazz.getFields()) {
+            if (field.isAnnotationPresent(IndividualParameter.class)) {
                 fieldList.add(field);
             }
         }
@@ -56,7 +69,7 @@ public class AddNicknameCommand extends AbstractCommand {
     }
 
     private Command createCommand(Class<? extends Command> command, String name) {
-        Field[] fields = this.getFillableField(command);
+        Field[] fields = this.getFillableFields(command);
 
         Command cmd = null;
         try {
@@ -77,13 +90,8 @@ public class AddNicknameCommand extends AbstractCommand {
                 String methodName = "set" + capitalized(field.getName());
                 Method setMethod = command.getMethod(methodName,field.getType());
 
-                Object arg = null;
-
                 if (defaultParameters.containsKey(field.getName())) {
                     setMethod.invoke(cmd, defaultParameters.get(field.getName()));
-                } else if (setMethod.getName().equals("setNickname")) {
-                    setMethod.invoke(cmd, name);
-                    System.out.println("Setnick");
                 }
 
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
