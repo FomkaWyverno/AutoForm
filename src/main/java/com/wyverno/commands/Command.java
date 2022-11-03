@@ -4,7 +4,8 @@ import com.wyverno.commands.annotations.FillableParameter;
 
 public abstract class Command {
 
-    protected String nickname;
+
+    public String nickname;
     @FillableParameter
     public String reason;
     @FillableParameter
