@@ -43,9 +43,7 @@ public class Form {
         return this.type != null;
     }
 
-    public HashMap<Field, Object> getParametersForCommand() {
-        return this.parametersForCommand;
-    }
+    public HashMap<Field, Object> getParametersForCommand() {return this.parametersForCommand;}
 
     private void changeParameters() {
         Field[] fields = this.type.getCLAZZ().getFields();
