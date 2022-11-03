@@ -45,16 +45,15 @@ public class AddNicknameCommand extends AbstractCommand {
         return fieldList.toArray(new Field[0]);
     }
 
-    private Field[] getIndividualFields(Class<? extends Command> clazz) {
-        List<Field> fieldList = new ArrayList<>();
+    private Field getIndividualField(Class<? extends Command> clazz) {
 
         for (Field field : clazz.getFields()) {
             if (field.isAnnotationPresent(IndividualParameter.class)) {
-                fieldList.add(field);
+                return field;
             }
         }
 
-        return fieldList.toArray(new Field[0]);
+        return null;
     }
 
     private List<Command> createListCommand(Class<? extends Command> command, String[] nicknames) {
@@ -69,7 +68,10 @@ public class AddNicknameCommand extends AbstractCommand {
     }
 
     private Command createCommand(Class<? extends Command> command, String name) {
-        Field[] fields = this.getFillableFields(command);
+        Field[] fillableFields = this.getFillableFields(command);
+        Field individualField = this.getIndividualField(command);
+
+        assert individualField != null;
 
         Command cmd = null;
         try {
@@ -82,23 +84,28 @@ public class AddNicknameCommand extends AbstractCommand {
 
         HashMap<String, Object> defaultParameters = this.getConsole().getForm().getParametersForCommand();
 
-        for (Field field : fields) {
-            try {
-
-                System.out.println("name = " + field.getName());
-
-                String methodName = "set" + capitalized(field.getName());
-                Method setMethod = command.getMethod(methodName,field.getType());
-
-                if (defaultParameters.containsKey(field.getName())) {
-                    setMethod.invoke(cmd, defaultParameters.get(field.getName()));
-                }
-
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
+        for (Field field : fillableFields) {
+            if (defaultParameters.containsKey(field.getName())) {
+                setterParameterForCommand(command,cmd, field, defaultParameters.get(field.getName()));
             }
         }
+
+         setterParameterForCommand(command, cmd, individualField, name);
+
         return cmd;
+    }
+
+    private void setterParameterForCommand(Class<? extends Command> command, Command cmd, Field field, Object parameter) {
+        try {
+
+            System.out.println("name = " + field.getName());
+
+            String methodName = "set" + capitalized(field.getName());
+            Method setMethod = command.getMethod(methodName, field.getType());
+            setMethod.invoke(cmd, parameter);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public static String capitalized(String string) {
