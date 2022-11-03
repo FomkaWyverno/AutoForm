@@ -14,7 +14,9 @@ public class BanOffline extends Command {
     public int days;
 
     @ConstructorForCreateCommand
-    public BanOffline(String nickname, String reason, String prefix,
+    public BanOffline(@NameParameter(name = "nickname") String nickname,
+                      @NameParameter(name = "reason") String reason,
+                      @NameParameter(name = "prefix") String prefix,
                       @NameParameter(name = "typeBan") int typeBan,
                       @NameParameter(name = "days") int days) {
         super(nickname, reason, prefix);

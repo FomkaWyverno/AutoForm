@@ -12,7 +12,9 @@ public class JailOffline extends Command {
     public int time;
 
     @ConstructorForCreateCommand
-    public JailOffline(String nickname, String reason, String prefix,
+    public JailOffline(@NameParameter(name = "nickname") String nickname,
+                       @NameParameter(name = "reason") String reason,
+                       @NameParameter(name = "prefix") String prefix,
                        @NameParameter(name = "time") int time) {
         super(nickname, reason, prefix);
         this.time = time;

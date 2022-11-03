@@ -4,6 +4,8 @@ import com.wyverno.commands.annotations.ConstructorForCreateCommand;
 import com.wyverno.console.Console;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
+import java.util.Arrays;
 
 public class AddNicknameCommand extends AbstractCommand {
     public AddNicknameCommand(Console console) {
@@ -23,7 +25,9 @@ public class AddNicknameCommand extends AbstractCommand {
                 return;
             }
 
-
+            Arrays.stream(constructor.getParameters()).forEach(
+                    parameter -> Arrays.stream(parameter.getAnnotations()).forEach(System.out::println)
+            );
 
         } else {
             System.out.println("Пожалуйта выберите тип команды /settype");

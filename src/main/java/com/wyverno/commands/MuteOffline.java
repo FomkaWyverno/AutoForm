@@ -12,7 +12,9 @@ public class MuteOffline extends Command {
     public int time;
 
     @ConstructorForCreateCommand
-    public MuteOffline(String nickname, String reason, String prefix,
+    public MuteOffline(@NameParameter(name = "nickname") String nickname,
+                       @NameParameter(name = "reason") String reason,
+                       @NameParameter(name = "prefix") String prefix,
                        @NameParameter(name = "time") int time) {
         super(nickname, reason, prefix);
         this.time = time;

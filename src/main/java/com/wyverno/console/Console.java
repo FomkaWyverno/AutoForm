@@ -29,6 +29,9 @@ public class Console {
     }
 
     public void readingLine(String line) throws InvocationTargetException, IllegalAccessException {
+
+        if (line.isEmpty()) return;
+
         String userCommand = substringUserCommand(line);
         if (commands.containsKey(userCommand)) {
             Method method = commands.get(userCommand);

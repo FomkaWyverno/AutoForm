@@ -11,9 +11,7 @@ public abstract class Command {
     @FillableParameter
     public String prefix;
 
-    public Command(@NameParameter(name = "nickname")String nickname,
-                   @NameParameter(name = "reason") String reason,
-                   @NameParameter(name = "prefix") String prefix) {
+    public Command(String nickname, String reason, String prefix) {
         this.nickname = nickname;
         this.reason = reason;
         this.prefix = prefix;
