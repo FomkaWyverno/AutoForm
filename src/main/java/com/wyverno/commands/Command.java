@@ -10,6 +10,8 @@ public abstract class Command {
     @FillableParameter
     public String prefix;
 
+    public Command() {}
+
     public Command(String nickname, String reason, String prefix) {
         this.nickname = nickname;
         this.reason = reason;

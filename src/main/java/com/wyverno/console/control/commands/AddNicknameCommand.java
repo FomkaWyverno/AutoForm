@@ -25,6 +25,7 @@ public class AddNicknameCommand extends AbstractCommand {
                                                   .getType()
                                                   .getCLAZZ());
 
+
         } else {
             System.out.println("Пожалуйта выберите тип команды /settype");
         }
